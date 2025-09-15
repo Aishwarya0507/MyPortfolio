@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Aishwarya Marry</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; }
+
+    /* Header/Navbar */
+    header {
+      background: #1a1a1a;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    /* Menu items (top bar) */
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover,
+    nav ul li a.active { color: #ffcc00; }
+
+    /* Hamburger (3 lines) */
+    .menu-toggle {
+      font-size: 28px;
+      cursor: pointer;
+      color: white; /* White menu bar */
+      margin-left: 20px;
+      display: block;
+    }
+
+    /* Overlay background */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Slide Menu (when ☰ is clicked) */
+    .side-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: -260px;
+      height: 100%;
+      width: 260px;
+      background: #1a1a1a;
+      padding: 80px 20px;
+      gap: 20px;
+      transition: right 0.3s ease-in-out;
+      border-left: 2px solid #333;
+      z-index: 1001;
+    }
+    .side-menu.show { right: 0; }
+    .side-menu li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    .side-menu li a:hover,
+    .side-menu li a.active { color: #ffcc00; }
+
+    /* Close button inside side menu */
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 80px;
+      flex-wrap: wrap;
+    }
+    .hero-text { max-width: 550px; }
+    .hero-text h2 { font-size: 20px; margin-bottom: 10px; }
+    .hero-text h1 { font-size: 40px; margin-bottom: 10px; }
+    .hero-text h1 span { color: #ffcc00; }
+    .hero-text h3 { font-size: 22px; margin-bottom: 15px; color: #ccc; }
+    .hero-text p { margin-bottom: 20px; color: #aaa; }
+    .btn-group { display: flex; gap: 15px; }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-hire { background: #ffcc00; color: #111; }
+    .btn-hire:hover { background: #e6b800; }
+    .btn-cv { background: transparent; border: 2px solid #fff; color: #fff; }
+    .btn-cv:hover { background: #fff; color: #111; }
+    .hero img { width: 320px; border-radius: 10px; }
+
+    @media (max-width: 900px) {
+      nav ul { display: none; } /* hide normal nav on small screens */
+      .menu-toggle { display: block; }
+      .hero { flex-direction: column; text-align: center; }
+      .hero img { margin-top: 30px; }
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 60px;
+      border-bottom: 1px solid #333;
+    }
+    section h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+      color: #ffcc00;
+    }
+    section p { max-width: 800px; color: #aaa; }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header>
+    <div class="logo">W.</div>
+    <nav>
+      <!-- Top menu items -->
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certificates">Certificates</a></li>
+        <li><a href="#internships">Internships</a></li>
+        <li><a href="#resume">Resume</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <!-- ☰ menu at the right -->
+    <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+  </header>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <!-- Side Menu (for mobile) -->
+  <ul id="side-menu" class="side-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certificates">Certificates</a></li>
+    <li><a href="#internships">Internships</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <h2>Hello,</h2>
+      <h1>I'm <span>Aishwarya Marry</span></h1>
+      <h3>Aspiring Web Developer</h3>
+      <p>I am a skilled and passionate web developer with experience in creating visually appealing and user-friendly websites.</p>
+      <div class="btn-group">
+        <button class="btn btn-hire">Hire Me</button>
+        <button class="btn btn-cv">Download CV</button>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="assets/images/myphoto.jpg" alt="Profile Image">
+    </div>
+  </section>
+
+  <!-- Sections -->
+  <section id="about"><h2>About Me</h2><p>I’m Aishwarya, an aspiring Web Developer who loves coding, designing, and building user-friendly websites. My focus is on continuous learning and improving my skills to build a successful career in software development. Along with web development, I also have knowledge in C++, Java, Data Structures & Algorithms (DSA), and SQL basics, which strengthen my problem-solving and programming abilities.</p></section>
+<section id="skills" class="section">
+  <h2>My Skills</h2>
+
+  <div class="skill">
+    <p>HTML & CSS</p>
+    <div class="progress"><div class="progress-fill" style="width:90%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>JavaScript</p>
+    <div class="progress"><div class="progress-fill" style="width:75%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>React.js</p>
+    <div class="progress"><div class="progress-fill" style="width:70%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>Java</p>
+    <div class="progress"><div class="progress-fill" style="width:85%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>C++</p>
+    <div class="progress"><div class="progress-fill" style="width:80%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>Data Structures & Algorithms (DSA)</p>
+    <div class="progress"><div class="progress-fill" style="width:75%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>SQL Basics</p>
+    <div class="progress"><div class="progress-fill" style="width:65%"></div></div>
+  </div>
+</section>
+<section id="projects" class="section">
+  <h2>My Projects</h2>
+  <div class="projects-container">
+
+    <!-- Project 1 -->
+    <div class="project-card">
+      <h3>Portfolio Website</h3>
+      <p>A personal portfolio showcasing my skills, resume, and projects using HTML, CSS, and JavaScript. This website highlights my design and development abilities.</p>
+      <a href="" target="_blank" class="btn">View Project</a>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+      <h3>Amazon Clone (Frontend)</h3>
+      <p>A responsive Amazon clone built using HTML and CSS, focusing on layout, styling, and UI components to replicate the shopping interface.</p>
+      <a href="https://amazon-clone-umber-nu.vercel.app/" target="_blank" class="btn">View project</a>
+    </div>
+
+  </div>
+</section>
+<!-- ===== Certificates Section ===== -->
+<section id="certificates">
+  <h2>My Certificates</h2>
+  <div class="certificates-container">
+
+    <!-- Certificate Card 1 -->
+    <div class="certificate-card">
+      <h3>Cyber Job Simulation</h3>
+      <p>Issued by Deloitte(Forage) · 2025</p>
+      <a href="./assets/certificates/Deloitte.jpg" target="_blank" class="btn">view certificate
+      </a>
+    </div>
+
+    <!-- Certificate Card 2 -->
+    <div class="certificate-card">
+      <h3>Web Development Full-Stack</h3>
+      <p>Issued by Kitsw · 2025</p>
+      <a href="./assets/certificates/intern.jpg" target="_blank" class="btn">View Certificate</a>
+    </div>
+
+    <div class="certificate-card">
+      <h3>Solutions Architecture</h3>
+      <p>Issued by AWS · 2025</p>
+      <a href="./assets/certificates/aws.jpg" target="_blank" class="btn">View Certificate</a>
+    </div>
+  </div>
+</section>
+<!-- Internships Section -->
+<section id="internships">
+  <h2>Internships</h2>
+  <div class="internships-container">
+<div class="internship-card">
+      <h3>Full-Stack Web development internship</h3>
+      <p>Completed a offline internship program focused on <b>Web development full-stack</b>.  
+         gaining hands-on experience in designing and developing responsive websites. Worked with HTML, CSS, JavaScript, and SQL for frontend and backend tasks, and collaborated on building user-friendly, scalable applications.</p>
+    </div>
+    <div class="internship-card">
+      <h3>Deloitte – Virtual Internship</h3>
+      <p>Completed a virtual internship program focused on <b>technology consulting</b>.  
+         Gained exposure to real-world problem solving, teamwork, and technical analysis.</p>
+    </div>
+<div class="internship-card">
+      <h3>Java Full-stack Internship</h3>
+      <p>Currently pursuing a Java Full Stack Internship at Vaishnav Technologies. Learning and working on frontend (HTML, CSS, JavaScript) and backend (Java, SQL) technologies to build dynamic, user-friendly web applications. 
+        <a href="./assets/certificates/offer letter.pdf" target="_blank" class="btn">View OfferLetter</a> 
+    </div>
+  </div>
+</section>
+  <section id="resume"><h2>Resume</h2><p><a href="assets/resume/myResume.pdf" target="_blank" style="color:#ffcc00;">Download My Resume</a></p></section>
+  <!-- Contact Section -->
+<section id="contact">
+  <h2>Contact Me</h2>
+  <p><b> You can Connect With Me</b>, through a call, connect on social platforms, or send me a message:</p>
+  
+  <!-- Phone Number -->
+  <p class="phone">
+    📞 <a href="tel:+918977284684">+918977284684</a>
+  </p>
+
+  <!-- Social Links -->
+  <div class="social-links">
+    <a href="https://www.linkedin.com/in/aishwarya-marry-2b0464323/in/your-linkedin" target="_blank">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://github.com/Aishwarya0507" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.instagram.com/aishu__chinnuu" target="_blank">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
+
+  <!-- Contact Form -->
+  <form action="https://formspree.io/f/yourFormID" method="POST" class="contact-form">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+  <!-- Script -->
+  <script>
+    function toggleMenu() {
+      document.getElementById("side-menu").classList.toggle("show");
+      document.getElementById("overlay").classList.toggle("show");
+    }
+  </script>
+
+</body>
+</html>
